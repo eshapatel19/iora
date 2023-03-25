@@ -19,7 +19,7 @@ class CreateObjectsTable extends Migration
             $table->foreignId('employee_id');
             $table->string('client_name');
             $table->integer('client_number');
-            $table->string('address');
+            $table->text('address');
             $table->integer('postcode');
             $table->foreignId('city_id');
             $table->integer('key_number');

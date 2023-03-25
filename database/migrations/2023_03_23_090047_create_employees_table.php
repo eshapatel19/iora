@@ -21,7 +21,7 @@ class CreateEmployeesTable extends Migration
             $table->string('email')->unique();
             $table->string('username')->unique();
             $table->string('password');
-            $table->string('address');
+            $table->text('address');
             $table->integer('zipcode');
             $table->string('region')->nullable();
             $table->foreignId('country_id');
