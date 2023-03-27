@@ -21,10 +21,10 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->foreignId('company_id');
             $table->foreignId('salutation_id');
-            $table->foreignId('role_id');
+            $table->foreignId('role_id')->nullable();
             $table->text('profile')->nullable();
             $table->integer('contact_number')->nullable();
-            $table->integer('status');
+            $table->integer('status')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

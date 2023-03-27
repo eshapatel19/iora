@@ -19,7 +19,7 @@ class CreateAddressesTable extends Migration
             $table->foreignId('company_id');
             $table->foreignId('country_id');
             $table->foreignId('city_id');
-            $table->string('address')->nullable();
+            $table->text('address')->nullable();
             $table->integer('zipcode')->nullable();
             $table->integer('type'); //address type business and billing
             $table->integer('status');
