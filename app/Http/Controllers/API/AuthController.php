@@ -85,9 +85,9 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-//    public function userProfile() {
-//        return response()->json(auth()->user());
-//    }
+    public function userProfile() {
+        return response()->json(auth()->user());
+    }
     /**
      * Get the token array structure.
      *
@@ -102,5 +102,32 @@ class AuthController extends Controller
             'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => auth()->user()
         ]);
+    }
+
+    public function update(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'username' => 'required|string',
+            'company_id' => 'nullable|string',
+            'profile' => 'required',
+            'contact_number' => 'nullable|string|max:12|min:10',
+            'salutation_id' => 'required|exists:salutations,id',
+            'email' => 'required|email|max:100|unique:users',
+            'status' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+
+      $user =auth()->user();
+        $user->update($request->all());
+        return $user;
+
+        return response()->json(['message' => 'Update Successfully']);
     }
 }
