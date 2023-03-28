@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\SalutationController;
 use App\Http\Controllers\API\AuthController;
-
+use App\Http\Controllers\API\EmployeeController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -32,6 +32,14 @@ Route::group([
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
     Route::post('/edit-profile', [AuthController::class, 'update']);
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'employee'
+], function ($router) {
+    Route::post('/add-employee', [EmployeeController::class, 'addEmployee']);
+    Route::post('/edit-employee', [EmployeeController::class, 'editEmployee']);
 });
 
 

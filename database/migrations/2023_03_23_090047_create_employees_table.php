@@ -25,7 +25,7 @@ class CreateEmployeesTable extends Migration
             $table->integer('zipcode');
             $table->string('region')->nullable();
             $table->foreignId('country_id');
-            $table->integer('phone_number')->nullable();
+            $table->string('phone_number')->nullable();
             $table->date('join_date');
             $table->integer('employee_number');
             $table->integer('amount_of_vacation_days');
