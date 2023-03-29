@@ -41,9 +41,9 @@ class AuthController extends Controller
      */
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'username' => 'required|string',
+            'first_name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+            'username' => 'required|string|max:10',
             'company_id' => 'nullable|string',
             'salutation_id' => 'required|exists:salutations,id',
             'email' => 'required|string|email|max:100|unique:users',
@@ -91,7 +91,7 @@ class AuthController extends Controller
     /**
      * Get the token array structure.
      *
-     * @param  string $token
+     * @param string $token
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -108,23 +108,23 @@ class AuthController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'username' => 'required|string',
-            'company_id' => 'nullable|string',
-            'profile' => 'required',
-            'contact_number' => 'nullable|string|max:12|min:10',
+            'first_name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+            'username' => 'required|string|max:10',
+            'company_id' => 'nullable|exists:companies,id',
+            'profile' => 'nullable|mimes:jpg,jpeg,png,bmp,tiff',
+            'contact_number' => 'required|numeric|digits:10',
             'salutation_id' => 'required|exists:salutations,id',
             'email' => 'required|email|max:100|unique:users',
             'status' => 'required',
         ]);
 
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
         }
 
 
-      $user =auth()->user();
+        $user = auth()->user();
         $user->update($request->all());
         return $user;
 

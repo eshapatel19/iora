@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\SalutationController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\EmployeeController;
+use App\Http\Controllers\API\ObjectController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,4 +43,12 @@ Route::group([
     Route::post('/edit-employee', [EmployeeController::class, 'editEmployee']);
 });
 
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'objects'
+], function ($router) {
+    Route::post('/add-object', [ObjectController::class, 'addObject']);
+    Route::post('/edit-object', [ObjectController::class, 'editObject']);
+});
 

@@ -19,24 +19,24 @@ class EmployeeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|exists:users,id',
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:100|unique:employees',
             'username' => 'required|string',
             'password' => 'required|string|min:6',
-            'address' => 'required|string',
-            'zipcode' => 'required|string',
-            'region' => 'required|string',
+            'address' => 'required|string|max:255',
+            'zipcode' => 'required|string|max:6',
+            'region' => 'required|string|max:50',
             'country_id' => 'required|exists:countries,id',
-            'phone_number' => 'nullable|string|max:12|min:10',
+            'phone_number' => 'required|numeric|digits:10',
             'join_date' => 'required',
-            'employee_number' => 'required|string',
-            'amount_of_vacation_days' => 'nullable|string',
+            'employee_number' => 'required|numeric',
+            'amount_of_vacation_days' => 'nullable|numeric',
             'amount_of_hours_work' => 'nullable|string',
             'status' => 'required',
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json($validator->errors(), 400);
         }
         $employee = new Employee;
         $employee->user_id = auth()->user()->id;
@@ -63,24 +63,24 @@ class EmployeeController extends Controller
     public function editEmployee(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:100',
             'username' => 'required|string',
             'password' => 'nullable|string|min:6',
-            'address' => 'required|string',
-            'zipcode' => 'required|string',
-            'region' => 'required|string',
+            'address' => 'required|string|max:255',
+            'zipcode' => 'required|string|max:6',
+            'region' => 'required|string|max:50',
             'country_id' => 'required|exists:countries,id',
-            'phone_number' => 'nullable|string|max:12|min:10',
+            'phone_number' => 'required|numeric|digits:10',
             'join_date' => 'required',
-            'employee_number' => 'required|string',
-            'amount_of_vacation_days' => 'nullable|string',
+            'employee_number' => 'required|numeric',
+            'amount_of_vacation_days' => 'nullable|numeric',
             'amount_of_hours_work' => 'nullable|string',
             'status' => 'required',
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json($validator->errors(), 400);
         }
 
         $employee = Employee::find($request->id);
